@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<>, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;,">
+    <title>Document</title>
+    <style>
+        .center-table {
+            width: 35%;
+            margin: 0 auto;
+        }
+
+        .outerleft-td {
+            position: relative;
+        }
+
+        .innerleft-td {
+            position: absolute;
+            top: 30px;
+            left: 10px;
+        }
+
+        .outerright-td {
+            position: relative;
+        }
+
+        .innerright-td {
+            position: absolute;
+            top: 100px;
+            left: 10px;
+
+        }
+
+        .text {
+            position: absolute;
+            top: 150px;
+            left: 80px;
+        }
+
+        .potential {
+            position: absolute;
+            top: 350px;
+            left: 80px;
+        }
+
+        .move-number {
+            position: absolute;
+            top: 200px;
+            left: 60px;
+        }
+
+        .move-number2 {
+            position: absolute;
+            top: 230px;
+            left: 67px;
+
+        }
+
+        .right-word {
+            position: absolute;
+            left: 180px;
+            top: 110px;
+
+        }
+
+        .red-text {
+            color: red;
+            font-size: 20px;
+        }
+
+        #attack,
+        #defence,
+        #lucky,
+        #magic {
+            display: inline-block;
+        }
+
+        .box1 {
+            position: fixed;
+            top: 550px;
+            left: 350px;
+            width: 20%;
+            height: 10%;
+            background-color: greenyellow;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box11 {
+            background-color: mediumspringgreen;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .box2 {
+            position: fixed;
+            top: 550px;
+            left: 1070px;
+            width: 20%;
+            height: 10%;
+            background-color: greenyellow;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box22 {
+            background-color: mediumspringgreen;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .shiny-box,
+        .same-box {
+            width: 148px;
+            height: 148px;
+        }
+
+        .powerall {
+            margin-bottom: 0px;
+            margin-top: 0px;
+        }
+    </style>
+
+</head>
+
+<body align="center">
+    <h1>賦予裝備潛力</h1>
+    <h3>現在 你可以開始賦予裝備一些基本能力<br>請點選下方每個能力右方開始~</h3>
+
+    <div class="center-table">
+        <table border="3" width="600px" height="500">
+            <tr>
+                <td class="outerleft-td">
+                    <table border="3" width="300" height="450">
+                        <tr>
+                            <p class="text">
+                                <label for="attack">攻擊力:</label>
+                                <button type="button" id="attack">點選開始</button> <br>
+                                <label for="defence">防禦力:</label>
+                                <button type="button" id="defence">點選開始</button> <br>
+                                <label for="lucky">幸運值:</label>
+                                <button type="button" id="lucky">點選開始</button> <br>
+                                <label for="magic">魔力值:</label>
+                                <button type="button" id="magic">點選開始</button> <br>
+                                <br><br><br>
+                                <button id="startpot">
+                                    <a href="#choice">點選開始洗潛力</a></button>
+                            </p>
+                            <p class="potential">
+                                <span id="downp1"></span><br>
+                                <span id="downp2"></span><br>
+                                <span id="downp3"></span>
+                            </p>
+
+                            <td class="innerleft-td" id="leftImg">
+                                <table border="3" width="120px" height="100px"></table>
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+                <td class="outerright-td">
+                    <table border="3" width="300" height="320">
+                        <tr>
+                            <p class="right-word">閃炫方塊</p>
+
+                            <p class="move-number" style="display:none" id="six-power">
+                                <label>
+                                    <input type="checkbox" class="powerall" id="one">
+                                </label><br>
+                                <label>
+                                    <input type="checkbox" class="powerall" id="two">
+                                </label><br>
+                                <label>
+                                    <input type="checkbox" class="powerall" id="three">
+                                </label><br>
+                                <lable>
+                                    <input type="checkbox" class="powerall" id="four">
+                                </lable><br>
+                                <label>
+                                    <input type="checkbox" class="powerall" id="five">
+                                </label><br>
+                                <label>
+                                    <input type="checkbox" class="powerall" id="six">
+                                </label><br><br>
+                                <button type="button" class="rechoice">重新選擇</button>
+                                <button type="button" id="reuse">再用一次</button>
+                                <button type="button" id="rightyes">確定</button>
+                            </p>
+                            <p class="move-number2" style="display:none" id="three-power">
+                                <span class="powera22">{{secondchoices.0}}</span><br>
+                                <span class="powera22">{{secondchoices.1}}</span><br>
+                                <span class="powera22">{{secondchoices.2}}</span><br><br>
+                                <button type="button" class="rechoice">重新選擇</button>
+                                <button type="button" id="reuse2">再用一次</button>
+                                <button type="button" id="rightyes2">確定</button>
+                            </p>
+                            <td class="innerright-td" id="right-td">
+                                <table border="3" width="100px" height="100px"></table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <h2>基本能力設訂好後 下方在提供兩種神祕方塊偽裝備增加神秘能力<br>
+        兩種方塊功能不同 可以根據自己需求選擇使用</h2><br><br><br><br><br><br><br><br>
+
+    <div id="choice">請先選擇方塊</div><br>
+
+
+    <label for="shinybox"><b>閃炫方塊</b></label>
+    <input type="hidden" name="shinybox" id="shinybox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for="samebox"><b>對等方塊</b></label>
+    <input type="hidden" name="samebox" id="samebox"><br>
+
+
+
+    <div id="shinybox_1" class="box1" style="display:none">
+        <div class="box11" style="display:none">
+            <p><b>此方塊會出現神聖的六道力量，
+                    使用者可任一選擇其中三個力量為裝備使用<br>。
+                    確認使用該方塊嗎?<b>
+            </p>
+            <button id="box1_yes">
+                確定
+            </button>
+            <button id="box1_refuse">在思考一下</button>
+        </div>
+    </div>
+
+    <div id="samebox_1" class="box2" style="display:none">
+        <div class="box22" style="display:none">
+            <p>此方塊有機會為裝備注入最頂級的兩道相同屬性，
+                (亦可能為不同屬性)及其中一道任一力量<br>。
+                確認使用該方塊嗎?</p>
+            <button id="box2_yes">
+                確定
+            </button>
+            <button id="box2_refuse">在思考一下</button>
+        </div>
+    </div>
+    <img src="{% static 'image/aimg_13.PNG' %}" alt="" width="145px" height="145px" class="shiny-box">
+    <img src="{% static 'image/aimg_14.PNG' %}" alt="" width="150px" height="150px" class="same-box"><br>
+
+
+    <script src="{% static 'js/up.js' %}"></script>
+</body>
+
+</html>

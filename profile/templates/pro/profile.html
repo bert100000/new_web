@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微楓登入頁面</title>
+</head>
+<style>
+    body {
+        background-image: url({% static 'image/moveimg_2.gif' %});
+        background-size: 800px;
+    }
+
+    h1 {
+        background-color: aqua;
+        display: inline-block;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    td {
+        text-align: center;
+        font-size: 23px;
+        color: white;
+        background-color: black
+    }
+
+    .first {
+        font-size: 25px;
+    }
+
+    .second {
+        color: blue;
+        font-size: 28px;
+    }
+
+    .third {
+        font-size: 20px;
+    }
+</style>
+
+<body>
+    <h1>
+        歡迎來到微楓登入頁面
+    </h1>
+    <p class="first">
+        <b> 本網站提供一連串<span class="second"><u>四種不同的玩法</u></span>，讓你獲得喜歡的裝備序號~
+            並可於官網遊戲內進行兌換。</b>
+    </p>
+    <p class="third">
+        <b>P.S.您可點選以下文字或圖片進入頁面開始遊戲</b>
+    </p>
+
+    <table border="4" width="1050" height="250" align="center">
+        <tr height="50px">
+
+            <td><a href="{% url 'pro_draw' %}">001</a></td>
+            <td>002</td>
+            <td>003</td>
+            <td>004</td>
+        </tr>
+        <tr>
+            <td>
+                <img src="{% static 'image/index_1.jpg' %}" alt="" width=350px height=250px>
+            </td>
+            <td>
+                <img src="{% static 'image/index_2.jpg' %}" alt="" width=350px height=250px>
+            </td>
+            <td>
+                <img src="{% static 'image/index_4.jpg' %}" alt="" width=350px height=250px>
+            </td>
+            <td>
+                <img src="{% static 'image/index_3.jpg' %}" alt="" width=350px height=250px>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

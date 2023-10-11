@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        img {
+            width: 120px;
+            height: 120px;
+        }
+
+        td {
+            width: 120px;
+            height: 120px;
+        }
+
+        h1 {
+            margin: 0px 0px 0px 400px;
+        }
+
+        table {
+            margin: 0 auto;
+            position: absolute;
+            left: 35%;
+        }
+
+        #change,
+        #run1 {
+            margin-left: 55px;
+            font-size: 20px;
+        }
+
+        h2 {
+            color: blue;
+        }
+
+        .down {
+            display: flex;
+            justify-content: center;
+        }
+
+        .lastbt {
+            margin-left: 820px;
+        }
+
+        .highlight {
+            animation: blink 1.5s ease-in-out infinite alternate;
+            border: 5px solid transparant;
+            box-shadow: 0 0 20px dodgerblue
+        }
+
+        .model {
+            position: fixed;
+            top: 650px;
+            left: 1100px;
+            width: 20%;
+            height: 10%;
+            background-color: greenyellow;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .confirm-content {
+            background-color: mediumspringgreen;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 0;
+                box-shadow: 0 0 10px gold;
+            }
+
+            70% {
+                opacity: 1;
+                box-shadow: 0 0 20px lawngreen;
+                ;
+
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="sec1">抽抽頁面</h1><br>
+
+    <div class="main_table">
+        <table border="8" width="480" height="480">
+            <tr>
+                <td id="img_1"><img src="{% static 'image/draw_1.PNG' %}" alt=""></td>
+                <td id="img_2"><img src="{% static 'image/draw_2.PNG' %}" alt=""></td>
+                <td id="img_3"><img src="{% static 'image/draw_3.PNG' %}" alt=""></td>
+                <td id="img_4"><img src="{% static 'image/draw_4.PNG' %}" alt=""></td>
+            </tr>
+            <tr>
+                <td id="img_5"><img src="{% static 'image/draw_5.PNG' %}" alt=""></td>
+                <td colspan="2" rowspan="2">
+                    <button type="button" id="change" onclick="switchImg()"> 更換圖片位置</button><br>
+                    <button type="button" id="run1" onclick="startDraw()">開始進行抽取</button>
+                </td>
+                <td id="img_6"><img src="{% static 'image/draw_6.PNG' %}" alt=""></td>
+            </tr>
+            <tr>
+                <td id="img_7"><img src="{% static 'image/draw_7.PNG' %}" alt="" id="img7"></td>
+                <td id="img_8"><img src="{% static 'image/draw_8.PNG' %}" alt="" id="img8"></td>
+            </tr>
+            <tr>
+                <td id="img_9"><img src="{% static 'image/draw_9.PNG' %}" alt="" id="img9"></td>
+                <td id="img_10"><img src="{% static 'image/draw_10.PNG' %}" alt="" id="img10"></td>
+                <td id="img_11"><img src="{% static 'image/draw_11.PNG' %}" alt="" id="img11"></td>
+                <td id="img_12"><img src="{% static 'image/draw_12.PNG' %}" alt="" id="img12"></td>
+            </tr>
+        </table>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br>
+
+
+    <h2 align="center" id="sec2"></h2>
+
+    <table border="2.5">
+        <tr>
+            <td id=finalImg>111</td>
+        </tr>
+    </table><br>
+
+    <div class="lastbt">
+        <button id="retry" style="display:none">再次嘗試抽取裝備</button>
+        <button id="nextport" style="display:none">確認該裝備並進入賦予裝備程序</button>
+    </div>
+    <div id="confirm" class="model" style="display:none">
+        <div class="confirm-content">
+            <p>確定要選擇此裝備洗潛力嗎?</p>
+            <button id="yes">
+                <a href="{% url 'pro_up' %}">確定</a>
+            </button>
+            <button id="refuse">在思考一下</button>
+        </div>
+    </div>
+
+
+    <script src="{% static 'js/draw.js' %}"></script>
+
+</body>
+
+</html>
