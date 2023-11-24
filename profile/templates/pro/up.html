@@ -1,133 +1,152 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=<>, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;,">
-    <title>Document</title>
-    <style>
-        .center-table {
-            width: 35%;
-            margin: 0 auto;
-        }
+<title>裝備能力頁面</title>
+<style>
+    .center-table {
+        width: 35%;
+        margin: 0 auto;
+    }
 
-        .outerleft-td {
-            position: relative;
-        }
+    .outerleft-td {
+        position: relative;
+    }
 
-        .innerleft-td {
-            position: absolute;
-            top: 30px;
-            left: 10px;
-        }
+    .innerleft-td {
+        position: absolute;
+        top: 30px;
+        left: 10px;
+    }
 
-        .outerright-td {
-            position: relative;
-        }
+    .outerright-td {
+        position: relative;
+    }
 
-        .innerright-td {
-            position: absolute;
-            top: 100px;
-            left: 10px;
+    .innerright-td {
+        position: absolute;
+        top: 100px;
+        left: 10px;
 
-        }
+    }
 
-        .text {
-            position: absolute;
-            top: 150px;
-            left: 80px;
-        }
+    .text {
+        position: absolute;
+        top: 150px;
+        left: 80px;
+    }
 
-        .potential {
-            position: absolute;
-            top: 350px;
-            left: 80px;
-        }
+    .potential {
+        position: absolute;
+        top: 350px;
+        left: 80px;
+    }
 
-        .move-number {
-            position: absolute;
-            top: 200px;
-            left: 60px;
-        }
+    .move-number {
+        position: absolute;
+        top: 200px;
+        left: 60px;
+    }
 
-        .move-number2 {
-            position: absolute;
-            top: 230px;
-            left: 67px;
+    .move-number2 {
+        position: absolute;
+        top: 230px;
+        left: 67px;
 
-        }
+    }
 
-        .right-word {
-            position: absolute;
-            left: 180px;
-            top: 110px;
+    .right-word {
+        position: absolute;
+        left: 180px;
+        top: 110px;
 
-        }
+    }
 
-        .red-text {
-            color: red;
-            font-size: 20px;
-        }
+    .red-text {
+        color: red;
+        font-size: 20px;
+    }
 
-        #attack,
-        #defence,
-        #lucky,
-        #magic {
-            display: inline-block;
-        }
+    #attack,
+    #defence,
+    #lucky,
+    #magic {
+        display: inline-block;
+    }
 
-        .box1 {
-            position: fixed;
-            top: 550px;
-            left: 350px;
-            width: 20%;
-            height: 10%;
-            background-color: greenyellow;
-            justify-content: center;
-            align-items: center;
-        }
+    .box1 {
+        position: fixed;
+        top: 550px;
+        left: 350px;
+        width: 20%;
+        height: 10%;
+        background-color: greenyellow;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .box11 {
-            background-color: mediumspringgreen;
-            text-align: center;
-            border-radius: 10px;
-        }
+    .box11 {
+        background-color: mediumspringgreen;
+        text-align: center;
+        border-radius: 10px;
+    }
 
-        .box2 {
-            position: fixed;
-            top: 550px;
-            left: 1070px;
-            width: 20%;
-            height: 10%;
-            background-color: greenyellow;
-            justify-content: center;
-            align-items: center;
-        }
+    .box2 {
+        position: fixed;
+        top: 550px;
+        left: 1070px;
+        width: 20%;
+        height: 10%;
+        background-color: greenyellow;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .box22 {
-            background-color: mediumspringgreen;
-            text-align: center;
-            border-radius: 10px;
-        }
+    .box22 {
+        background-color: mediumspringgreen;
+        text-align: center;
+        border-radius: 10px;
+    }
 
-        img {
-            width: 100px;
-            height: 100px;
-        }
+    img {
+        width: 100px;
+        height: 100px;
+    }
 
-        .shiny-box,
-        .same-box {
-            width: 148px;
-            height: 148px;
-        }
+    .shiny-box,
+    .same-box {
+        width: 148px;
+        height: 148px;
+    }
 
-        .powerall {
-            margin-bottom: 0px;
-            margin-top: 0px;
-        }
-    </style>
+    .powerall {
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+
+    #finalsend {
+        position: absolute;
+        top: 440px;
+        left: 120px;
+    }
+
+    #equipName {
+        position: absolute;
+        top: 50px;
+    }
+
+    #startp {
+        position: absolute;
+        top: 320px;
+        left: 100px;
+    }
+
+    #starta {
+        position: absolute;
+        top: 290px;
+        left: 130px
+    }
+</style>
 
 </head>
 
@@ -141,25 +160,29 @@
                 <td class="outerleft-td">
                     <table border="3" width="300" height="450">
                         <tr>
-                            <p class="text">
-                                <label for="attack">攻擊力:</label>
-                                <button type="button" id="attack">點選開始</button> <br>
-                                <label for="defence">防禦力:</label>
-                                <button type="button" id="defence">點選開始</button> <br>
-                                <label for="lucky">幸運值:</label>
-                                <button type="button" id="lucky">點選開始</button> <br>
-                                <label for="magic">魔力值:</label>
-                                <button type="button" id="magic">點選開始</button> <br>
-                                <br><br><br>
-                                <button id="startpot">
-                                    <a href="#choice">點選開始洗潛力</a></button>
-                            </p>
-                            <p class="potential">
-                                <span id="downp1"></span><br>
-                                <span id="downp2"></span><br>
-                                <span id="downp3"></span>
-                            </p>
+                            <span id="equipName"></span>
+                            <form action="{% url 'equipData' %}" method="POST">
+                                {% csrf_token %}
+                                <p class="text">
+                                    <label for="attack">攻擊力:</label>
+                                    <span id="attack" name="attack"></span><br>
+                                    <label for="defence">防禦力:</label>
+                                    <span id="defence" name="defence"></span><br>
+                                    <label for="lucky">幸運值:</label>
+                                    <span id="lucky" name="lucky"></span><br>
+                                    <label for="magic">魔力值:</label>
+                                    <span id="magic" name="magic"></span><br>
+                                </p>
+                                <button type="button" id="starta">開始</button>
+                                <a href="#choice" id="startp">點選開始洗潛力</a>
 
+                                <p class="potential">
+                                    <span id="downp1"></span><br>
+                                    <span id="downp2"></span><br>
+                                    <span id="downp3"></span>
+                                </p>
+                                <button type="submit" id="finalsend" style="display:none">送出保留</button>
+                            </form>
                             <td class="innerleft-td" id="leftImg">
                                 <table border="3" width="120px" height="100px"></table>
                             </td>
@@ -257,6 +280,5 @@
 
 
     <script src="{% static 'js/up.js' %}"></script>
-</body>
 
-</html>
+    {% endblock %}

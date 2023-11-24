@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+
+<style>
+    td {
+        font-size: 20px;
+    }
+</style>
+
+
+
+{% if pro %}
+<h2><span style="text-decoration:underline">{{pro.title}}</span>
+    {% if pro.important %}
+    <span style="color:red">(重要裝備)</span>
+    {% endif %}
+</h2>
+<table border="3">
+    <tr>
+        <td>裝備圖片</td>
+        <td id="first-image"><img src="{% static 'image/' %}{{ img_filename }}" alt="{{ img_filename }}"></td>
+    </tr>
+    <tr>
+        <td>裝備產出時間</td>
+        <td>{{pro.created}}</td>
+    </tr>
+    <tr>
+        <td>最後更新時間</td>
+        <td>{% if pro.date_completed is None %}
+            暫無更新
+            {% else %}
+            {{pro.date_completed}}
+            {% endif %}</td>
+    </tr>
+    <tr>
+        <td>是否為標記裝備<br></td>
+        <td>{% if not pro.important %}
+            否
+            {% else %}
+            是
+            {% endif %}<br></td>
+    </tr>
+    <tr>
+        <td>裝備名稱<br></td>
+        <td>{{pro.equipName}}<br></td>
+    </tr>
+    <tr>
+        <td>攻擊力</td>
+        <td>{{pro.attack}}</td>
+    </tr>
+    <tr>
+        <td>防禦力</td>
+        <td>{{pro.defence}}</td>
+    </tr>
+    <tr>
+        <td>幸運值</td>
+        <td>{{pro.lucky}}</td>
+    </tr>
+    <tr>
+        <td>魔力值</td>
+        <td>{{pro.magic}}</td>
+    </tr>
+    <tr>
+        <td>主要潛力一</td>
+        <td>{{pro.value1}}</td>
+    </tr>
+    <tr>
+        <td>主要潛力二</td>
+        <td>{{pro.value2}}</td>
+    </tr>
+    <tr>
+        <td>主要潛力三</td>
+        <td>{{pro.value3}}</td>
+    </tr>
+    <tr>
+        <td style="background-color:black"><span style="color:gold"><b>推薦購買價格</b></span></td>
+        <form action="{% url 'shopcartname'  %}" method="POST">
+            {% csrf_token %}
+            <td>{{number}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="hidden" name = "product_img" value="{{pro.finalImgPath}}">
+                <input type="hidden" name="product_name" value="{{pro.title}}">
+                <input type="hidden" name="price" value="{{number}}">
+                <input type="hidden" name="quantity" value="1">
+                <button type="summit">加入購物車</button>
+            </td>
+        </form>
+    </tr>
+</table>
+<h2>
+    <span style="text-decoration:underline">額外資訊</span>(可至下方新增修改)<br>
+</h2>
+
+<form action="{% url 'pro' id=pro.id %}" method="POST">
+    {% csrf_token %}
+    <table border="3">
+        <tr>
+            <td>心情小語</td>
+            <td><input type="text" name="text" value="{{ pro.text }}"></td>
+        </tr>
+        <tr>
+            <td>重要裝備</td>
+            <td>
+                <input type="checkbox" name="important" 
+                {% if pro.important %}checked
+                {% endif %}>
+            </td>
+        </tr>
+        <tr>
+            <td>是否更新</td>
+            <td><input type="submit" value="更新"></td>
+    </table>
+</form>
+
+{% else %}
+目前無裝備資料
+{% endif %}
+
+{% endblock %}

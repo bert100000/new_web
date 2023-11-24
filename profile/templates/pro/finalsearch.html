@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<style>
+    .final-table {
+        position: relative;
+        top: 80px;
+        left: 400px;
+    }
+</style>
+
+<title>顯示查詢頁面</title>
+
+<div class=final-table>
+    <table border="1" width="800px" height="40px">
+        <span style="color:darkmagenta;font-size:30px"><b>商品明細:</b></span>
+        <tr>
+            <td>商品圖片</td>
+            <td>商品名稱</td>
+            <td>商品數量</td>
+            <td>商品單價</td>
+            <td>價格小計</td>
+        </tr>
+        {% for cart in shopcartlist %}
+        <tr>
+            <td>
+                <img src="{% static 'image/' %}{{ cart.img_name }}" alt="{{ cart.img_name }}">
+            </td>
+            <td>{{cart.product_name}}</td>
+            <td>{{cart.quantity}}</td>
+            <td>{{cart.price}}</td>
+            <td>{{cart.price}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    {% endblock%}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<title>查詢頁面</title>
+
+<style>
+    .search-frame {
+        position: relative;
+        top: 200px;
+        left: 40%;
+        font-size: 20px;
+    }
+</style>
+
+<div class="search-frame">
+    <form action="{% url 'finalsearch' %}" method="POST">
+        {% csrf_token %}
+        <label for="search" name="search"><b>請輸入訂單編號:</b>
+            <input type="text" name="search">
+        </label><br>
+        <label for="mbox" name="search"><b>請輸入確認信箱:</b>
+            <input type="text" name="mbox">
+        </label>
+        <button type="submit">查詢</button>
+    </form>
+    {{message}}
+</div>
+
+{% endblock %}

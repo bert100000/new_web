@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+<title>事項建立頁面</title>
+
+{% block content %}
+
+
+<h1>開始建立裝備資料</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">建立</button><br>
+    {{message}}
+</form>
+{% endblock %}

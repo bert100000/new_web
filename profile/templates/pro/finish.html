@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>訂單生成頁面</title>
+
+{% block content %}
+
+<style>
+    .finishlist {
+        position: relative;
+        left: 40%;
+        top: 200px;
+    }
+</style>
+
+
+
+
+<div class="finishlist">
+    <span style="color:red;font-size:30px"><b>您已完成訂單</b><br>
+        訂單編號為:{{lastordernumber}}<br>
+        您的查詢信箱:{{lastmessagebox}}
+    </span><br>
+    
+    <span>請熟記您的編號，方便之後查詢使用</span><br><br>
+    <span>請點選左上方LOGIN返回主頁面</span>
+</div>
+
+
+{% endblock %}

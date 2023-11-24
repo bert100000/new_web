@@ -14,7 +14,8 @@ const Elrefuse = document.querySelector('#refuse');
 const start = 1;
 const end = 12;
 
-let lastImageSrc = '';
+//let lastImageSrc = '';
+
 let click = true;
 const getRandNumber = (start, end) => Math.floor(Math.random() * (end - start + 1) + start);
 
@@ -31,7 +32,8 @@ function getNumber(start, end, count = 12) {
 }
 
 changeimg.addEventListener("click", () => {
-    switchImg();
+    switchImg()
+
 });
 
 run1Element.addEventListener("click", () => {
@@ -41,10 +43,11 @@ run1Element.addEventListener("click", () => {
     Elretry.disabled = false;
 
 
-    startDraw((lastImgSrc) => {
+    startDraw((lastImgSrc, finalValue) => {
         console.log("最後圖片位置:" + lastImgSrc);
 
-        Eltext2.innerText = '恭喜獲得裝備'
+
+        Eltext2.innerText = `恭喜獲得裝備:${finalValue}`;
         Elretry.style.display = 'block';
         Elnextport.style.display = 'block'
     });
@@ -52,8 +55,8 @@ run1Element.addEventListener("click", () => {
 
 Elretry.addEventListener("click", () => {
 
-    changeimg.disabled = false; // 恢复按钮可用状态
-    run1Element.disabled = false; // 恢复按钮可用状态
+    changeimg.disabled = false; // 恢復按鈕可以使用
+    run1Element.disabled = false;
     Elnextport.disabled = true;
     Elretry.style.display = 'none';
     Elnextport.style.display = 'none';
@@ -74,8 +77,8 @@ Elyes.addEventListener("click", () => {
 
 Elrefuse.addEventListener("click", () => {
     Elconfirm.style.display = 'none';
-    changeimg.disabled = false; // 恢复按钮可用状态
-    run1Element.disabled = false; // 恢复按钮可用状态
+    changeimg.disabled = false;
+    run1Element.disabled = false;
     finalEl.innerHTML = '';
     Elretry.style.display = 'none';
     Elnextport.style.display = 'none';
@@ -83,29 +86,93 @@ Elrefuse.addEventListener("click", () => {
 
 })
 
+//let finalValue = '';  
+let finalImgPath = '';
 
 function switchImg() {
+    //console.log('變化後' + finalImgPath)
+    //用上方getNumber函式取得一個隨機亂數的串列
     let datas = getNumber(start, end);
     console.log('第一次結果' + datas[0])
     for (let i = 1; i <= 12; i++) {
+        //取12張圖片img1、img2...的部分
         const cellImgElement = document.querySelector(`#img_${i}`);
-        const imgSrc = `/static/image/draw_${datas[i - 1]}.PNG`;
+        const cellreplaImg = document.querySelector(`#img_${datas[i - 1]}`);
 
-        //const = `'<table border="2.5">'+'<tr>'`
-        if (cellImgElement) {
-            cellImgElement.innerHTML = `<img src="${imgSrc}" alt="">`;
+        const imgSrc = `/static/image/draw_${datas[i - 1]}.PNG`;
+        let dataValue = '';
+
+        //本來使用includes但發現draw10.11.12重複裝備名稱而改用
+        if (imgSrc.match(/\/draw_(\d+)\.PNG/)) {
+            const number = parseInt(RegExp.$1);
+            switch (number) {
+                case 1:
+                    dataValue = '紫色神秘披風';
+                    localStorage.setItem('dataValue', dataValue);
+                    break;
+                case 2:
+                    dataValue = '賢者標誌';
+                    localStorage.setItem('dataValue', dataValue);
+                    break;
+                case 3:
+                    dataValue = '紅玫瑰戒指';
+                    localStorage.setItem('dataValue', dataValue);
+                    break;
+                case 4:
+                    dataValue = '漆黑能量臉飾';
+                    localStorage.setItem('dataValue', dataValue);
+                    break;
+                case 5:
+                    dataValue = '頂級陪羅德耳環';
+                    localStorage.setItem('dataValue', dataValue);
+                    break;
+                case 6:
+                    dataValue = '雙手血刃盾牌';
+                    localStorage.setItem('dataValue', dataValue);
+                    break;
+                case 7:
+                    dataValue = '波賽頓雙刀';
+                    localStorage.setItem('dataValue', dataValue);
+                    break;
+                case 8:
+                    dataValue = '紫靈惡魔盾牌';
+                    localStorage.setItem('dataValue', dataValue);
+                    break;
+                case 9:
+                    dataValue = '黃金十字耳環';
+                    localStorage.setItem('dataValue', dataValue);
+                    break;
+                case 10:
+                    dataValue = '黃石項鍊';
+                    localStorage.setItem('dataValue', dataValue);
+                    break;
+                case 11:
+                    dataValue = '菲爾斯戰斧';
+                    localStorage.setItem('dataValue', dataValue);
+                    break;
+                case 12:
+                    dataValue = '航海師披風';
+                    localStorage.setItem('dataValue', dataValue);
+                    break;
+            }
         }
-        lastImageSrc = imgSrc;
+
+        console.log(imgSrc, dataValue);
+        if (cellImgElement) {
+            cellImgElement.innerHTML = `<img src="${imgSrc}" data-value="${dataValue}" alt="">`;
+        }
     }
-    click = !click;
 }
+
+click = !click;
 
 let intervalId;
 let currentIndex = 0;
 
-let finalImgPath = '';
+
 
 function startDraw(callback) {
+
     clearInterval(intervalId);
     tdElements.forEach(td => td.classList.remove('highlight'));
 
@@ -120,20 +187,29 @@ function startDraw(callback) {
         } while (currentIndex === 5);
 
         tdElements[currentIndex].classList.add('highlight');
-
         count++;
+
 
         if (count >= 20) {
             clearInterval(intervalId);
             const finalTdElement = tdElements[currentIndex];
             const finalImgSrc = finalTdElement.querySelector('img').getAttribute('src');
+            //console.log(finalImgSrc)取得該圖片的src
+            const lastDrawDataValue = finalTdElement.querySelector('img').getAttribute('data-value');
+            //console.log(lastDrawDataValue)
             finalImgPath = finalImgSrc;
-            localStorage.setItem('finalImgPath', finalImgPath);//儲存最後圖片網址以讓下個js使用
-            //console.log(finalImgSrc);
+            finalValue = lastDrawDataValue;
+
+            //儲存最後圖片網址以讓下個js使用
+            localStorage.setItem('finalImgPath', finalImgPath);
+            localStorage.setItem('finalValue', finalValue);
+
 
             if (typeof callback === 'function') {
                 finalEl.innerHTML = `<img src="${finalImgSrc}" alt="">`;
-                callback(finalImgSrc);
+                console.log('區域變數:' + finalValue);
+                //console.log(finalImgSrc);
+                callback(finalImgSrc, finalValue);
             }
         }
     }, 100);

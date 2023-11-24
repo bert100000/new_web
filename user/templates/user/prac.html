@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<title>水族館</title>
+
+    <h1>fffff</h1>
+    <form action="" method>
+        {{form}}     
+    </form><br> 
+    {% for i in units %}
+    {{i.id}}
+    {{i.cName}}
+    {{i.cAddr}}<br>
+    {% endfor %}
+{% endblock %}

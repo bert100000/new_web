@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block title %}
+    {% endblock %}
+
+    <style>
+        #log {
+            background-color: midnightblue;
+            color: rgba(237, 233, 12, 0.951);
+            font-size: 28px;
+        }
+
+        #userr {
+            font-size: 25px;
+        }
+
+        .top-base {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!--將DB檔送至DBSQLITE VIEWER判斷-->
+    <div class="top-base">
+        {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}"><span id="log">
+                <b><u>LOGIN:</u></b></span>
+        </a>
+
+        <span id="userr">{{user.username}}</span>
+        {% if user.is_superuser == 1 %}
+        <span style='color:red'><b>(您現在是管理員)</b></span>
+        {% else %}
+        <span style='color:rgb(0, 76, 255)'><b>(您現在是使用者)</b></span>
+        {% endif %}
+        <a href="{% url 'logout' %}"><b>登出</b></a>&nbsp;&nbsp;&nbsp;
+        <a href="{% url 'create' %}"><b>建立</b></a>
+        建立時間:{{user.date_joined}}&nbsp;&nbsp;&nbsp;
+        最後登入時間:{{user.last_login}}<br>
+        {% else %}
+        <h2>請先
+            <a href="{% url 'logout' %}">登入</a>
+        </h2>
+
+        {% endif %}
+    </div>
+    {% block content %}
+    {% endblock %}
+
+</body>
+
+</html>

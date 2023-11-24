@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<title>購物車頁面</title>
+<!--<link rel="stylesheet" href="{% static 'css/shopcart.css' %}">-->
+<style>
+    .main-frame {
+        position: relative;
+        top: 80px;
+        left: 180px;
+        display: flex;
+    }
+
+    .right-frame {
+        position: relative;
+        top: 175px;
+        left: 60px;
+    }
+
+    .pagination {
+        position: relative;
+        top: 100px;
+        left: 180px;
+    }
+
+    .right-words {
+        position: relative;
+        top: 10px;
+    }
+
+    .start-pay {
+        position: relative;
+        left: 60px;
+    }
+</style>
+
+
+<div class="main-frame">
+    <table border="1" width="800px" height="40px">
+        <tr>
+            <td>商品圖片</td>
+            <td>商品名稱</td>
+            <td>商品數量</td>
+            <td>商品單價</td>
+            <td>價格小計</td>
+            <td></td>
+        </tr>
+        {% for cart in shopcartlist %}
+        <tr>
+            <td>
+                <img src="{% static 'image/' %}{{ cart.img_name }}" alt="{{ cart.img_name }}">
+            </td>
+            <td>{{cart.product_name}}</td>
+            <td>
+                {{ cart.quantity }}
+            </td>
+
+            <td>{{cart.price}}</td>
+            <td>{{cart_item.subtotal}}</td>
+            <td>
+                <a href="{% url 'delete_item' cart.id %}">
+                    刪除</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="right-frame">
+        <table border="1" width="300px" height="300px">
+            <tr>
+                <td>
+                    <form action="{% url 'paying' %}" method="POST">
+                        {% csrf_token %}
+                        &nbsp;<span style="font-size:20px"><b>此頁價格:{{page_prices}}</b></span><br>
+                        &nbsp;<span style="font-size:20px;"><b>含稅合計: NT$ {{total_prices}}</b></span><br>
+                        &nbsp;<span style="font-size:20px;"><b>付款方式: </b></span>
+                        <select name="pay_method" id="pay_method">
+                            <option value="transfer">ATM/匯款繳費</option>
+                            <option value="store_payment">超商繳費</option>
+                        </select><br><br><br><br>
+                        <div class="start-pay">
+                            <button type="submit" name="checkout">前往結帳</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="input" name="comeback">繼續購物</button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if shopcartlist.has_previous %}
+        <a href="?page=1">&laquo; 第一頁</a>
+        <a href="?page={{ shopcartlist.previous_page_number }}">上一頁</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ shopcartlist.number }} of {{ shopcartlist.paginator.num_pages }}.
+        </span>
+
+        {% if shopcartlist.has_next %}
+        <a href="?page={{ shopcartlist.next_page_number }}">下一頁</a>
+        <a href="?page={{ shopcartlist.paginator.num_pages }}">最後一頁 &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

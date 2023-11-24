@@ -1,4 +1,5 @@
 const ElleftImg = document.querySelector('#leftImg');
+
 const Elattack = document.querySelector('#attack');
 const Eldefence = document.querySelector('#defence');
 const Ellucky = document.querySelector('#lucky');
@@ -36,6 +37,10 @@ const Elreuse2 = document.querySelector('#reuse2');
 const Elbox1_refuse = document.querySelector('#box1_refuse');
 const Elbox2_refuse = document.querySelector('#box2_refuse');
 
+const Elfinalsend = document.querySelector('#finalsend');
+const ElequipName = document.querySelector('#equipName');
+const Elstarta = document.querySelector('#starta');
+
 let choices = [];
 let secondchoices = [];
 
@@ -70,13 +75,18 @@ const boxes = [
 
 //抽獎頁面最後的圖片帶入到這頁的html
 let finalImgPath = localStorage.getItem('finalImgPath');
+let finalValue = localStorage.getItem('finalValue');
+console.log(finalValue);
+
+//const requestData = { equipName: finalValue };
 ElleftImg.innerHTML = `<Img src="${finalImgPath}" alt="">`;
+ElequipName.innerText = finalValue;
 
 //定義屬性閃爍初始狀態
 let animationInterval;
 let currentValue = 0;
-let min = -12;
-let max = 12;
+let min = 45;
+let max = 99;
 
 //選出6選3
 function choiceThree() {
@@ -112,6 +122,7 @@ Elrechoice.forEach((recho) => {
         Eldownp1.innerText = '';
         Eldownp2.innerText = '';
         Eldownp3.innerText = '';
+        Elfinalsend.style.display = 'none';
 
 
     })
@@ -146,8 +157,8 @@ Elpowerall.forEach(checkbox => {
         const checkCount = choiceThree();
         if (checkCount > 3) {
             checkbox.checked = false;
-            }
-        else if(checkCount ===3){
+        }
+        else if (checkCount === 3) {
             Elrightyes.disabled = false;
         }
         else {
@@ -179,26 +190,36 @@ function finalPower2() {
     return finalPlist2;
 }
 
-
+const requestData = {};
+console.log('外部', requestData)
 Elrightyes.addEventListener('click', () => {
-    finalPlist = finalPower();
-    if (notThree()) {
-        Eldownp1.innerText = '';
-        Eldownp2.innerText = '';
-        Eldownp3.innerText = '';
-    } else {
-        Eldownp1.innerText = finalPlist[0];
-        Eldownp2.innerText = finalPlist[1];
-        Eldownp3.innerText = finalPlist[2];
+    const finalPlist = finalPower();
 
-    }
+    Eldownp1.innerText = finalPlist[0];
+    Eldownp2.innerText = finalPlist[1];
+    Eldownp3.innerText = finalPlist[2];
+
+    Elfinalsend.style.display = 'block';
+
+    requestData.value1 = finalPlist[0];
+    requestData.value2 = finalPlist[1];
+    requestData.value3 = finalPlist[2];
+    console.log('requestData', requestData);
 });
 
 Elrightyes2.addEventListener('click', () => {
-    finalPlist2 = finalPower2()
+    const finalPlist2 = finalPower2()
+
     Eldownp1.innerText = finalPlist2[0];
     Eldownp2.innerText = finalPlist2[1];
     Eldownp3.innerText = finalPlist2[2];
+
+    Elfinalsend.style.display = 'block';
+
+    requestData.value1 = finalPlist2[0];
+    requestData.value2 = finalPlist2[1];
+    requestData.value3 = finalPlist2[2];
+    console.log('requestData2', requestData);
 });
 
 
@@ -239,11 +260,6 @@ Elsame_box.addEventListener('click', boxClick1);
 Elshiny_box.addEventListener('click', boxClick2);
 
 
-Elattack.addEventListener("click", () => startClick(Elattack));
-Eldefence.addEventListener("click", () => startClick(Eldefence));
-Ellucky.addEventListener("click", () => startClick(Ellucky));
-Elmagic.addEventListener("click", () => startClick(Elmagic));
-
 Elbox1_yes.addEventListener("click", () => {
     fetchData();
     Elright_td.innerHTML = `<img src="/static/image/aimg_13.PNG" alt="">`;
@@ -251,11 +267,6 @@ Elbox1_yes.addEventListener("click", () => {
     Elrightyes.disabled = 'true';
 
     Elpowerall.forEach((checkbox, index) => {
-        //const label = checkbox.parentElement;
-        //label.style.display = 'block';
-        //checkbox.disabled = false;
-        //checkbox.style.display = 'inline-block'; // 显示复选框
-        //label.textContent = choices[index];
         checkbox.checked = false;
         checkbox.nextSibling.textContent = choices[index]
         console.log(choices[index])
@@ -282,7 +293,7 @@ Elbox2_yes.addEventListener("click", () => {
     Elsame_box.removeEventListener('click', boxClick1)
 });
 
-Elbox1_refuse.addEventListener('click',()=>{
+Elbox1_refuse.addEventListener('click', () => {
     isClicked = false;//讓鼠標移過去可以顯示
     Elsame_box.addEventListener('click', boxClick1);
     Elshiny_box.addEventListener('click', boxClick2);
@@ -290,7 +301,7 @@ Elbox1_refuse.addEventListener('click',()=>{
     Elbox11.style.display = 'none';
 })
 
-Elbox2_refuse.addEventListener('click',()=>{
+Elbox2_refuse.addEventListener('click', () => {
     isClicked = false;//讓鼠標移過去可以顯示
     Elsame_box.addEventListener('click', boxClick1);
     Elshiny_box.addEventListener('click', boxClick2);
@@ -298,11 +309,21 @@ Elbox2_refuse.addEventListener('click',()=>{
     Elbox22.style.display = 'none';
 })
 
-function startClick(button) {
+Elstarta.addEventListener('click', () => {
+    startClick(Elattack, 'attack');
+    startClick(Eldefence, 'defence');
+    startClick(Ellucky, 'lucky');
+    startClick(Elmagic, 'magic');
+})
+
+
+let lastattrData = [];
+function startClick(button, fieldName) {
+    let attrData = [];
+
 
     button.textContent = ''; //清空
     button.classList.add('red-text');
-    button.disabled = true;
 
     const numberElement = document.createElement('span');
     button.appendChild(numberElement);
@@ -310,18 +331,47 @@ function startClick(button) {
     const interval = setInterval(() => {
         const randomValue = getRandomValue(min, max);
         button.textContent = randomValue;
+        attrData.push(randomValue)
 
-        setTimeout(() => {
-            clearInterval(interval);
-            button.disabled = false;
-        }, 1500);//閃爍的總共時間
-    }, 70);//閃爍的速度
+    }, 70);
+
+    setTimeout(() => {
+        clearInterval(interval);
+        const lastRandomValue = attrData[attrData.length - 1];
+        lastattrData.push(lastRandomValue);
+        console.log(lastattrData);
+
+    }, 1500);//閃爍的總共時間
 }
 
 function getRandomValue(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+Elfinalsend.addEventListener('click', () => {
+    let finalImgPath = localStorage.getItem('finalImgPath');
+    console.log('最後資料', lastattrData);
+    console.log(requestData);
+
+    const finalrequestData = {
+        equipName: finalValue,
+        attack: lastattrData[0],
+        defence: lastattrData[1],
+        lucky: lastattrData[2],
+        magic: lastattrData[3],
+        value1: requestData.value1,
+        value2: requestData.value2,
+        value3: requestData.value3,
+        finalImgPath: finalImgPath
+    };
+    console.log(finalrequestData)
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/profile/equipData/', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(finalrequestData));
+
+})
 
 
 

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>付費頁面</title>
+
+{% block content %}
+
+<style>
+    .pay-frame {
+        position: relative;
+        top: 80px;
+        left: 400px;
+    }
+</style>
+
+<div class="pay-frame">
+    <table border="1" width="600px" height="200px">
+        <tr>
+            <form action="{% url 'finish' %}" method="POST">
+                {% csrf_token %}
+            <b>請確認下方資訊正確在下單</b><br>
+            <td style="font-size:20px">
+                <b>訂單編號:</b><input type="hidden" name="ordernumber" value="{{ordernumber}}">{{ordernumber}}<br>
+                <b>購買總價:</b><input type="hidden" name="totalPrice" value="{{total_prices}}">{{total_prices}}<br>
+                <b id="buyway">購買方式:</b><input  type="hidden" name="buy_way" value="{{message}}">{{message}}<br>
+                <span name=""><b>{{content}}</b></span><br>
+                <b>輸入您的信箱:</b>&nbsp;<input name="message_box" type="text"><br>
+                <span style="color:red">提醒:請輸入正確信箱作為往後查詢使用</span><br><br>
+                    <div>
+                        &nbsp;&nbsp;<button type="input" name="backshopcart">返回購物清單</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="submit" name="finish" id="finish">完成交易</button>
+                    </div><br>
+                </form>
+            </td>
+        </tr>
+        {% if payings == "store_payment" %}
+        <tr>
+            <td>
+                <iframe width="600" height="350" frameborder="0" style="border:0"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158858.18723108005!2d-73.96102254569434!3d40.73061048090329!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c258f531ad3a365%3A0x30d8bf6ee64b2156!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1660681698912!5m2!1sen!2sus"
+                    allowfullscreen></iframe>
+            </td>
+        </tr>
+        {% endif %}
+    </table>
+</div>
+
+{% endblock %}

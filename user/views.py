@@ -3,7 +3,14 @@ from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
+from user.models import student
+
 # Create your views here.
+
+def user_logout(request):
+    logout(request)
+    
+    return redirect('index')
 
 
 def index_login(request):
@@ -47,7 +54,6 @@ def user_register(request):
     
             if len(password1)<8:
                 message = '密碼過短 請加長密碼加強安全性!!!'
-                print(type(eval(password1)))
             elif password1 != password2:
                 message = '兩次輸入密碼不同 請確認!!!'
             
@@ -68,5 +74,21 @@ def user_register(request):
         print(request.POST)
     
     return render(request,'user/register.html',{'message':message})
+
+
+def practice(request):
+    
+    form=UserCreationForm()
+    
+    
+    unit = student.objects.create(cName='Charly',cSex='M',cBirthday='2023-10-16',cEmail='sdfged@gmail.com',cPhone='095584',cAddr='台北市動物園區')
+    unit.save()
+    units = student.objects.all()
+    print(unit)
+    
+    return render(request,'user/prac.html',locals())
+
+
+
             
 
